@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор переносу уроків</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="calculator">
+    <h1>Калькулятор переносу уроків</h1>
+
+    <label>Сума старого пакету (грн):</label>
+    <input type="number" id="oldTotalPrice" placeholder="Наприклад, 15699">
+
+    <label>Кількість уроків у старому пакеті:</label>
+    <input type="number" id="oldTotalLessons" placeholder="Наприклад, 50">
+
+    <label>Кількість уроків, що залишилось:</label>
+    <input type="number" id="remainingLessons" placeholder="Наприклад, 25">
+
+    <hr style="margin: 2rem 0; border-color: #444;">
+
+    <label>Сума нового пакету (грн):</label>
+    <input type="number" id="newTotalPrice" placeholder="Наприклад, 11939">
+
+    <label>Кількість уроків у новому пакеті:</label>
+    <input type="number" id="newTotalLessons" placeholder="Наприклад, 32">
+
+    <button onclick="calculateTransfer()">Обчислити</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateTransfer() {
+      const oldTotalPrice = parseFloat(document.getElementById("oldTotalPrice").value);
+      const oldTotalLessons = parseFloat(document.getElementById("oldTotalLessons").value);
+      const remainingLessons = parseFloat(document.getElementById("remainingLessons").value);
+      const newTotalPrice = parseFloat(document.getElementById("newTotalPrice").value);
+      const newTotalLessons = parseFloat(document.getElementById("newTotalLessons").value);
+
+      if (
+        isNaN(oldTotalPrice) || isNaN(oldTotalLessons) || isNaN(remainingLessons) ||
+        isNaN(newTotalPrice) || isNaN(newTotalLessons) ||
+        oldTotalLessons === 0 || newTotalLessons === 0
+      ) {
+        document.getElementById("result").innerText = "Будь ласка, заповніть всі поля правильно.";
+        return;
+      }
+
+      const oldLessonPrice = oldTotalPrice / oldTotalLessons;
+      const balanceValue = remainingLessons * oldLessonPrice;
+      const newLessonPrice = newTotalPrice / newTotalLessons;
+      const exactNewLessons = balanceValue / newLessonPrice;
+      const flooredLessons = Math.floor(exactNewLessons);
+
+      document.getElementById("result").innerHTML =
+        `<p>Ціна одного уроку в старому пакеті: <strong>${oldLessonPrice.toFixed(2)} грн</strong></p>` +
+        `<p>Залишок у грошовому еквіваленті: <strong>${balanceValue.toFixed(2)} грн</strong></p>` +
+        `<p>Ціна одного уроку в новому пакеті: <strong>${newLessonPrice.toFixed(2)} грн</strong></p>` +
+        `<p>Кількість уроків до переносу: <strong>${exactNewLessons.toFixed(2)} (округлено: ${flooredLessons})</strong></p>`;
+    }
+  </script>
+</body>
+</html>
