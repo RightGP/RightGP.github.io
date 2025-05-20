@@ -10,21 +10,21 @@
   <div class="calculator">
     <h1>Калькулятор переносу уроків</h1>
 
-    <label>Сума старого пакету (грн):</label>
+    <label>Ціна пакету з акаунта 1 (грн):</label>
     <input type="number" id="oldTotalPrice" placeholder="Наприклад, 15699">
 
-    <label>Кількість уроків у старому пакеті:</label>
+    <label>Кількість уроків:</label>
     <input type="number" id="oldTotalLessons" placeholder="Наприклад, 50">
 
-    <label>Кількість уроків, що залишилось:</label>
+    <label>Кількість уроків, що залишилась:</label>
     <input type="number" id="remainingLessons" placeholder="Наприклад, 25">
 
     <hr style="margin: 2rem 0; border-color: #444;">
 
-    <label>Сума нового пакету (грн):</label>
+    <label>Ціна пакету з акаунта 2 (грн):</label>
     <input type="number" id="newTotalPrice" placeholder="Наприклад, 11939">
 
-    <label>Кількість уроків у новому пакеті:</label>
+    <label>Кількість уроків:</label>
     <input type="number" id="newTotalLessons" placeholder="Наприклад, 32">
 
     <button onclick="calculateTransfer()">Обчислити</button>
@@ -56,9 +56,9 @@
       const flooredLessons = Math.floor(exactNewLessons);
 
       document.getElementById("result").innerHTML =
-        `<p>Ціна одного уроку в старому пакеті: <strong>${oldLessonPrice.toFixed(2)} грн</strong></p>` +
+        `<p>Ціна одного уроку в оплаті акаунту 1: <strong>${oldLessonPrice.toFixed(2)} грн</strong></p>` +
         `<p>Залишок у грошовому еквіваленті: <strong>${balanceValue.toFixed(2)} грн</strong></p>` +
-        `<p>Ціна одного уроку в новому пакеті: <strong>${newLessonPrice.toFixed(2)} грн</strong></p>` +
+        `<p>Ціна одного уроку в акаунті 2: <strong>${newLessonPrice.toFixed(2)} грн</strong></p>` +
         `<p>Кількість уроків до переносу: <strong>${exactNewLessons.toFixed(2)} (округлено: ${flooredLessons})</strong></p>`;
     }
   </script>
