@@ -1,71 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор переносу уроків</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-</head>
-<body>
-  <div class="calculator">
-    <img rel="icon" type="image/png" sizes="32x32" src="images/favicon-32x32.png">
-    <h1>Калькулятор переносу уроків</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Калькулятор переносу уроків</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div class="calculator">
+      <h1><img rel="icon" type="image/png" sizes="32x19" src="images/js_logo32%D1%8519.png"/>Калькулятор переносу уроків</h1>
 
-    <label>Ціна пакету з акаунта 1 (грн):</label>
-    <input type="number" id="oldTotalPrice" placeholder="Наприклад, 3589">
+      <label>Ціна пакету з акаунта 1 (грн):</label>
+      <input type="number" id="oldTotalPrice" placeholder="Наприклад, 3589" />
 
-    <label>Кількість уроків в пакеті:</label>
-    <input type="number" id="oldTotalLessons" placeholder="Наприклад, 8">
+      <label>Кількість уроків в пакеті:</label>
+      <input type="number" id="oldTotalLessons" placeholder="Наприклад, 8" />
 
-    <label>Кількість уроків, що переносимо:</label>
-    <input type="number" id="remainingLessons" placeholder="Наприклад, 4">
+      <label>Кількість уроків, що переносимо:</label>
+      <input type="number" id="remainingLessons" placeholder="Наприклад, 4" />
 
-    <hr style="margin: 2rem 0; border-color: #444;">
+      <hr style="margin: 2rem 0; border-color: #444" />
 
-    <label>Ціна пакету з акаунта 2 (грн):</label>
-    <input type="number" id="newTotalPrice" placeholder="Наприклад, 3912">
+      <label>Ціна пакету з акаунта 2 (грн):</label>
+      <input type="number" id="newTotalPrice" placeholder="Наприклад, 3912" />
 
-    <label>Кількість уроків в пакеті:</label>
-    <input type="number" id="newTotalLessons" placeholder="Наприклад, 8">
+      <label>Кількість уроків в пакеті:</label>
+      <input type="number" id="newTotalLessons" placeholder="Наприклад, 8" />
 
-    <button onclick="calculateTransfer()">Обчислити</button>
+      <button onclick="calculateTransfer()">Обчислити</button>
 
-    <div id="result"></div>
-  </div>
+      <div id="result"></div>
+    </div>
 
-  <script>
-    function calculateTransfer() {
-      const oldTotalPrice = parseFloat(document.getElementById("oldTotalPrice").value);
-      const oldTotalLessons = parseFloat(document.getElementById("oldTotalLessons").value);
-      const remainingLessons = parseFloat(document.getElementById("remainingLessons").value);
-      const newTotalPrice = parseFloat(document.getElementById("newTotalPrice").value);
-      const newTotalLessons = parseFloat(document.getElementById("newTotalLessons").value);
+    <script>
+      function calculateTransfer() {
+        const oldTotalPrice = parseFloat(document.getElementById("oldTotalPrice").value);
+        const oldTotalLessons = parseFloat(document.getElementById("oldTotalLessons").value);
+        const remainingLessons = parseFloat(document.getElementById("remainingLessons").value);
+        const newTotalPrice = parseFloat(document.getElementById("newTotalPrice").value);
+        const newTotalLessons = parseFloat(document.getElementById("newTotalLessons").value);
 
-      if (
-        isNaN(oldTotalPrice) || isNaN(oldTotalLessons) || isNaN(remainingLessons) ||
-        isNaN(newTotalPrice) || isNaN(newTotalLessons) ||
-        oldTotalLessons === 0 || newTotalLessons === 0
-      ) {
-        document.getElementById("result").innerText = "Будь ласка, заповніть всі поля правильно.";
-        return;
+        if (
+          isNaN(oldTotalPrice) ||
+          isNaN(oldTotalLessons) ||
+          isNaN(remainingLessons) ||
+          isNaN(newTotalPrice) ||
+          isNaN(newTotalLessons) ||
+          oldTotalLessons === 0 ||
+          newTotalLessons === 0
+        ) {
+          document.getElementById("result").innerText = "Будь ласка, заповніть всі поля правильно.";
+          return;
+        }
+
+        const oldLessonPrice = oldTotalPrice / oldTotalLessons;
+        const balanceValue = remainingLessons * oldLessonPrice;
+        const newLessonPrice = newTotalPrice / newTotalLessons;
+        const exactNewLessons = balanceValue / newLessonPrice;
+        const flooredLessons = Math.floor(exactNewLessons);
+
+        document.getElementById("result").innerHTML =
+          `<p>Ціна одного уроку в оплаті акаунту 1: <strong>${oldLessonPrice.toFixed(2)} грн</strong></p>` +
+          `<p>Залишок у грошовому еквіваленті: <strong>${balanceValue.toFixed(2)} грн</strong></p>` +
+          `<p>Ціна одного уроку в акаунті 2: <strong>${newLessonPrice.toFixed(2)} грн</strong></p>` +
+          `<p>Кількість уроків до переносу: <strong>${exactNewLessons.toFixed(2)} (округлено: ${flooredLessons})</strong></p>`;
       }
-
-      const oldLessonPrice = oldTotalPrice / oldTotalLessons;
-      const balanceValue = remainingLessons * oldLessonPrice;
-      const newLessonPrice = newTotalPrice / newTotalLessons;
-      const exactNewLessons = balanceValue / newLessonPrice;
-      const flooredLessons = Math.floor(exactNewLessons);
-
-      document.getElementById("result").innerHTML =
-        `<p>Ціна одного уроку в оплаті акаунту 1: <strong>${oldLessonPrice.toFixed(2)} грн</strong></p>` +
-        `<p>Залишок у грошовому еквіваленті: <strong>${balanceValue.toFixed(2)} грн</strong></p>` +
-        `<p>Ціна одного уроку в акаунті 2: <strong>${newLessonPrice.toFixed(2)} грн</strong></p>` +
-        `<p>Кількість уроків до переносу: <strong>${exactNewLessons.toFixed(2)} (округлено: ${flooredLessons})</strong></p>`;
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
